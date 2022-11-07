@@ -1,0 +1,112 @@
+{% extends "base.html" %}
+{% block title%}Home{% endblock %}
+
+
+{% block content %}
+
+    <div class="cotainer">
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <div class="card">
+                    <div class="card-header text-white " style="background-color:#f0ad4e;">
+                        <h4>Your Dashboard</h4>
+                    </div>
+                    <div class="card-body">
+                        <h2>Be your own guide {{session.fullname}}</h2>
+                            <br/>   
+                        <h5>Favorite Phrases </h5>
+                            <table class="table table-striped table-hover">
+                                <tr>
+                                    <th>Phrase</th>
+                                    <th>Translation</th>
+                                    <th>Language</th>
+                                    <th>Like It:</th>
+                                    <th>Actions:</th>
+                                </tr>
+                                {% for phrase in all_phrases %}
+                                <tr>
+
+                                    <td><button class="link link-primary"  onclick="getPhrase('{{phrase.id}}')">{{ phrase.phrase }}</button></td>
+                                    <td>{{ phrase.translation }}</td>
+                                    <td>{{ phrase.language }}</td>
+                                    <td>{{phrase.likes}} <a href="/like/{{phrase.id}}">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#f0ad4e" class="bi bi-hand-thumbs-up-fill" viewBox="0 0 16 16">
+                                            <path d="M6.956 1.745C7.021.81 7.908.087 8.864.325l.261.066c.463.116.874.456 1.012.965.22.816.533 2.511.062 4.51a9.84 9.84 0 0 1 .443-.051c.713-.065 1.669-.072 2.516.21.518.173.994.681 1.2 1.273.184.532.16 1.162-.234 1.733.058.119.103.242.138.363.077.27.113.567.113.856 0 .289-.036.586-.113.856-.039.135-.09.273-.16.404.169.387.107.819-.003 1.148a3.163 3.163 0 0 1-.488.901c.054.152.076.312.076.465 0 .305-.089.625-.253.912C13.1 15.522 12.437 16 11.5 16H8c-.605 0-1.07-.081-1.466-.218a4.82 4.82 0 0 1-.97-.484l-.048-.03c-.504-.307-.999-.609-2.068-.722C2.682 14.464 2 13.846 2 13V9c0-.85.685-1.432 1.357-1.615.849-.232 1.574-.787 2.132-1.41.56-.627.914-1.28 1.039-1.639.199-.575.356-1.539.428-2.59z"/>
+                                        </svg>
+                                        </a></td>
+                                        {%if phrase.user.id == session.user_id%}
+                                    <td>
+                                        <a href="/edit/{{phrase.id}}">Edit</a> |
+                                        <a href="/delete/{{phrase.id}}">Delete</a>
+                                        {%endif%}
+                                        {%if phrase.user.id != session.user_id%}
+                                        <td><button class="link link-primary" onclick="getPhrase('{{phrase.id}}')">Details</button></td>
+                                        {%endif%}
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+                <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header text-white " style="background-color:#f0ad4e;">
+                                <div id="creator">Created by </div>
+                                <h1 class="modal-title fs-5" id="exampleModalLabel"></h1>
+                                <a href="/users/profile"><button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button></a>
+                            </div>
+                            <div class="modal-body">
+                                    <div class="mb-3">
+                                        <label id="phrase" for="recipient-name" class="col-form-label">Phrase:</label>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label id="translation" for="message-text" class="col-form-label">Translation:</label>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label id="language" for="message-text" class="col-form-label">Language:</label>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label  id= "experience"  for="message-text" class="col-form-label">Experience:</label>
+                                    </div>
+                            </div>
+                            <div class="modal-footer">
+                                <a href="/users/profile"><button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+    <script
+    src="https://code.jquery.com/jquery-3.6.1.min.js"
+    integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ="
+    crossorigin="anonymous"></script>                
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
+<script>
+    $(document).ready(function(){
+        console.log("window is loades")
+        let creator=document.getElementById("creator")
+        let phrase=document.getElementById("phrase")
+        let translation=document.getElementById("translation")
+        let language=document.getElementById("language")
+        let experience=document.getElementById("experience")
+    })
+    function getPhrase(phraseId){
+        fetch(`http://127.0.0.1:5000/show/${phraseId}`)
+        .then(res=>res.json())
+        .then(res=>{
+            console.log(res)
+            creator.innerText=`${creator.innerText} ${res.user.fullname}`
+            phrase.innerText=`${phrase.innerText} ${res.phrase}`
+            translation.innerText=`${translation.innerText} ${res.translation}`
+            language.innerText=`${language.innerText} ${res.language}`
+            experience.innerText=`${experience.innerText} ${res.experience}`
+            $("#exampleModal").modal("show")
+        })
+        .catch(err=>console.log(err))
+    }
+    </script> 
+                    {% endblock%}

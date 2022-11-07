@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+{% block title%}Home{% endblock %}
+
+{% block content %}
+
+<br/>
+<form class="flex-wrapper flex-column flex-gap" action="/new/phrase" method="POST">
+    <main class="add-form">
+        <div class="cotainer">
+            <div class="row justify-content-center">
+                <div class="col-md-8">
+                    <div class="card">
+                        <div class="card-header text-white " style="background-color:#f0ad4e;">Let's add a new phrase {{session.fullname}}</div>
+                        <div class="card-body bg-light">
+                            {% include "messages.html"%}
+                            <div class="d-grid gap-3">
+                        <div class="form-group row">
+                                    <label class="col-md-4 col-form-label text-md-right">Phrase:</label>
+                                    <div class="col-md-6 margin-bottom">
+                                        <input type="text"  class="form-control" name="phrase" required autofocus>
+                                    </div>
+                                </div>
+    
+                                <div class="form-group row">
+                                    <label class="col-md-4 col-form-label text-md-right">Translation:</label>
+                                    <div class="col-md-6">
+                                        <input type="text"  class="form-control" name="translation" required>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-md-4 col-form-label text-md-right">Language:</label>
+                                    <div class="col-md-6">
+                                        <input type="text"  class="form-control" name="language" required>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-md-4 col-form-label text-md-right">Experience:</label>
+                                    <div class="col-md-6">
+                                        <input type="text"  class="form-control" name="experience" required>
+                                    </div>
+                                </div>
+                            </br>
+                                <div class="col-md-6 offset-md-4">
+                                    <button type="submit"  class="btn btn-outline-primary">
+                                        Submit
+                                    </button>
+                                    <a href="/users/profile">
+                                    <button type="button" class="btn btn-outline-primary">Cancel</button>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        </div>
+        </form>
+        {% endblock%}

@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="HandheldFriendly" content="true">
+    <link rel='stylesheet' href='{{ url_for('static', filename='create_phrase.css') }}'>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+    <title>Edit Phrase</title>
+</head>
+<body>
+
+    <style>@media (min-width: 768px) {
+        .navbar-brand.abs
+            {
+                position: absolute;
+                width: auto;
+                left: 50%;
+                transform: translateX(-50%);
+                text-align: center;
+            }
+        }
+    </style>
+    <nav class="navbar navbar-expand-md navbar-dark bg-primary">
+        <div class="container-fluid">
+            <a class="navbar-brand abs" href="/users/profile"><svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="currentColor" class="bi bi-house-fill" viewBox="0 0 16 16">
+                <path fill-rule="evenodd" d="m8 3.293 6 6V13.5a1.5 1.5 0 0 1-1.5 1.5h-9A1.5 1.5 0 0 1 2 13.5V9.293l6-6zm5-.793V6l-2-2V2.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5z"/>
+                <path fill-rule="evenodd" d="M7.293 1.5a1 1 0 0 1 1.414 0l6.647 6.646a.5.5 0 0 1-.708.708L8 2.207 1.354 8.854a.5.5 0 1 1-.708-.708L7.293 1.5z"/>
+                </svg></a>
+            <button class="navbar-toggler ms-auto" type="button" data-bs-toggle="collapse" data-bs-target="#collapseNavbar">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="navbar-collapse collapse" id="collapseNavbar">
+                <ul class="navbar-nav">
+                    <li class="nav-item active">
+                        <a class="nav-link" href="https://translate.google.com/">Want to learn more?</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="https://github.com/Cristinamk">GitHub</a>
+                    </li>
+                </ul>
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a href="/logout"  class=btn style="background-color:#f0ad4e;">Log Out</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+<form class="flex-wrapper flex-column flex-gap" action="/edit/{{data.id}}" method="POST">
+    <main class="edit-form">
+    </br>
+        <div class="cotainer">
+            <div class="row justify-content-center">
+                <div class="col-md-8 ">
+                    <div class="card border-warning mb-3">
+                        <div class="card-header text-white" style="background-color:#f0ad4e;">Let's edit your knowledge {{session.fullname}}</div>
+                        <div class="card-body bg-light">
+                            {% with messages = get_flashed_messages() %}
+                            <!-- declare a variable called messages -->
+                            {% if messages %}
+                            <!-- check if there are any messages -->
+                            {% for message in messages %}
+                            <!-- loop through the messages -->
+                            <p>{{message}}</p> <!-- display each message in a paragraph tag -->
+                            {% endfor %}
+                            {% endif %}
+                            {% endwith %}
+                            <div class="d-grid gap-3">
+                                <div class="form-group row">
+                                    <label class="col-md-4 col-form-label text-md-right">Phrase:</label>
+                                    <div class="col-md-6">
+                                        <input  value ="{{data.phrase}}" type="text"  class="form-control" name="phrase" required autofocus>
+                                    </div>
+                                </div>
+    
+                                <div class="form-group row">
+                                    <label class="col-md-4 col-form-label text-md-right">Translation</label>
+                                    <div class="col-md-6">
+                                        <input value ="{{data.translation}}" type="text"  class="form-control" name="translation" required>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-md-4 col-form-label text-md-right">Language</label>
+                                    <div class="col-md-6">
+                                        <input value ="{{data.language}}" type="text"  class="form-control" name="language" required>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-md-4 col-form-label text-md-right">Experience</label>
+                                    <div class="col-md-6">
+                                        <input  value ="{{data.experience}}" type="text"  class="form-control" name="experience" required>
+                                    </div>
+                                </div>
+    
+                            <div class="col-md-6 offset-md-4">
+                                <button type="submit"  class="btn btn-outline-primary">
+                                    Submit
+                                </button>
+                                <a href="/users/profile">
+                                <button type="button" class="btn btn-outline-primary">Cancel</button>
+                                </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        </div>
+        </form>
+</body>
+</html>
