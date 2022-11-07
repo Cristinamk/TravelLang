@@ -70,7 +70,7 @@ class User:
             flash("Thi email is already in use")
             is_valid = False
         if not PWD_REGEX.match(data['password']):
-            flash("Use a valid password")
+            flash("Use a valid password that include a numeber,one upper case and one symbol")
             is_valid = False
         if data['password'] != data['confirm_password']:
             flash("Password do not match")
