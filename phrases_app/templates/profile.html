@@ -95,6 +95,7 @@
         let experience=document.getElementById("experience")
     })
     function getPhrase(phraseId){
+        console.log("click")
         fetch(`http://127.0.0.1:5000/show/${phraseId}`)
         .then(res=>res.json())
         .then(res=>{
