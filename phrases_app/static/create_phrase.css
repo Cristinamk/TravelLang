@@ -1,4 +1,10 @@
 /* Media Queries: Tablet Landscape */
+
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
 @media screen and (max-width: 1060px) {
     #primary { width:67%; }
     #secondary { width:30%; margin-left:3%;}  
@@ -10,6 +16,7 @@
     #secondary { width:100%; margin:0; border:none; 
     }
 }
+
 
 img { max-width: 100%; height: auto; }
 
@@ -24,3 +31,9 @@ img { max-width: 100%; height: auto; }
         content: attr(data-src-800px, url);
     }
 }
+
+@media screen and (max-width: 433px){
+    #primary { width:40%; }
+    #secondary { width:15%; margin-left:2%;}  
+}
+    
